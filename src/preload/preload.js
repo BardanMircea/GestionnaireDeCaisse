@@ -1,6 +1,8 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-// On expose une API restreinte et sécurisée au Renderer
 contextBridge.exposeInMainWorld("api", {
   checkDatabaseStatus: () => ipcRenderer.invoke("db:check-status"),
+  getProducts: () => ipcRenderer.invoke("products:get-all"),
+  addProduct: (product) => ipcRenderer.invoke("products:add", product),
+  fetchOpenFoodFacts: (barcode) => ipcRenderer.invoke("api:fetch-off", barcode),
 });
