@@ -72,4 +72,15 @@ function addSale(saleData) {
   return newSale;
 }
 
-module.exports = { init, getStatus, getProducts, addProduct, addSale };
+function getSales() {
+  return readData().sales;
+}
+
+module.exports = {
+  init,
+  getStatus,
+  getProducts,
+  addProduct,
+  addSale,
+  getSales,
+};

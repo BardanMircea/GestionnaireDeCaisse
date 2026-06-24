@@ -6,4 +6,6 @@ contextBridge.exposeInMainWorld("api", {
   addProduct: (product) => ipcRenderer.invoke("products:add", product),
   fetchOpenFoodFacts: (barcode) => ipcRenderer.invoke("api:fetch-off", barcode),
   addSale: (saleData) => ipcRenderer.invoke("sales:add", saleData),
+  getSales: () => ipcRenderer.invoke("sales:get-all"),
+  exportCSV: () => ipcRenderer.invoke("sales:export-csv"),
 });

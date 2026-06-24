@@ -2,6 +2,9 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const db = require("./database");
 
+const { dialog } = require("electron");
+const fs = require("fs");
+
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1000,
@@ -21,7 +24,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  // Initialisation de notre fausse/petite BDD locale au démarrage
+  // Initialisation de la BDD locale au démarrage
   db.init();
 
   // Mise en place de l'écouteur IPC (e.g.: récupérer le statut de la DB)
@@ -70,6 +73,35 @@ app.whenReady().then(() => {
   // Enregistrer une vente
   ipcMain.handle("sales:add", async (event, saleData) => {
     return db.addSale(saleData);
+  });
+
+  // Récupérer l'historique des ventes
+  ipcMain.handle("sales:get-all", async () => {
+    return db.getSales();
+  });
+
+  // Exporter les ventes en CSV
+  ipcMain.handle("sales:export-csv", async () => {
+    const sales = db.getSales();
+
+    // Construction du contenu CSV (Date, ID Vente, Total TTC)
+    let csvContent = "\uFEFFDate;ID Vente;Total TTC (€)\n"; // BOM UTF-8 pour Excel
+    sales.forEach((sale) => {
+      csvContent += `${new Date(sale.date).toLocaleString()};${sale.id};${sale.totalTTC}\n`;
+    });
+
+    // Ouverture de la boîte de dialogue native de l'OS
+    const { filePath } = await dialog.showSaveDialog({
+      title: "Exporter les chiffres comptables",
+      defaultPath: `export-compta-${Date.now()}.csv`,
+      filters: [{ name: "Fichiers CSV", extensions: ["csv"] }],
+    });
+
+    if (filePath) {
+      fs.writeFileSync(filePath, csvContent, "utf-8");
+      return { success: true, path: filePath };
+    }
+    return { success: false };
   });
 
   createWindow();
