@@ -1,0 +1,12 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+h1 {
+  color: #2c3e50;
+}
+strong {
+  font-weight: bold;
+}
