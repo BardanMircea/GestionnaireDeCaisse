@@ -67,6 +67,11 @@ app.whenReady().then(() => {
     }
   });
 
+  // Enregistrer une vente
+  ipcMain.handle("sales:add", async (event, saleData) => {
+    return db.addSale(saleData);
+  });
+
   createWindow();
 
   app.on("activate", () => {
