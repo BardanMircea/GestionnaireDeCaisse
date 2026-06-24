@@ -56,4 +56,20 @@ function addProduct(product) {
   return newProduct;
 }
 
-module.exports = { init, getStatus, getProducts, addProduct };
+// --- Fonctions de Vente ---
+function addSale(saleData) {
+  const data = readData();
+
+  const newSale = {
+    id: `sale-${Date.now()}`,
+    date: new Date().toISOString(),
+    items: saleData.items, // Contient [{ id, name, price, qty, tva }]
+    totalTTC: parseFloat(saleData.totalTTC),
+  };
+
+  data.sales.push(newSale);
+  writeData(data);
+  return newSale;
+}
+
+module.exports = { init, getStatus, getProducts, addProduct, addSale };
