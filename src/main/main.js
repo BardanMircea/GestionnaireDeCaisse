@@ -24,9 +24,47 @@ app.whenReady().then(() => {
   // Initialisation de notre fausse/petite BDD locale au démarrage
   db.init();
 
-  // Mise en place de l'écouteur IPC (Exemple: Récupérer le statut de la DB)
+  // Mise en place de l'écouteur IPC (e.g.: récupérer le statut de la DB)
   ipcMain.handle("db:check-status", async () => {
     return db.getStatus();
+  });
+
+  // Récupérer tous les produits
+  ipcMain.handle("products:get-all", async () => {
+    return db.getProducts();
+  });
+
+  // Ajouter un produit
+  ipcMain.handle("products:add", async (event, product) => {
+    return db.addProduct(product);
+  });
+
+  // Requête OpenFoodFacts (Main Process centralise pour éviter les soucis de CORS dans le Renderer)
+  ipcMain.handle("api:fetch-off", async (event, barcode) => {
+    try {
+      const response = await fetch(
+        `https://world.openfoodfacts.org/api/v2/product/${barcode}.json`,
+      );
+      if (!response.ok)
+        return { success: false, message: "Erreur réseau OpenFoodFacts" };
+
+      const data = await response.json();
+      if (data.status === 1) {
+        return {
+          success: true,
+          product: {
+            barcode: barcode,
+            name: data.product.product_name || "",
+            brand: data.product.brands || "",
+            imageUrl: data.product.image_front_thumb_url || "",
+          },
+        };
+      } else {
+        return { success: false, message: "Produit inconnu sur OpenFoodFacts" };
+      }
+    } catch (error) {
+      return { success: false, message: "Mode hors-ligne ou API inaccessible" };
+    }
   });
 
   createWindow();
