@@ -1,53 +1,161 @@
-<h1>Gestion du Catalogue 📦</h1>
-<p>Statut BDD : <span id="db-status">...</span></p>
-<hr />
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Épicerie Caisse</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Système de Caisse & Catalogue 🛒</h1>
+    <p>Statut BDD : <span id="db-status">...</span></p>
+    <hr />
 
-<div style="display: flex; gap: 40px">
-  <div style="flex: 1; background: #eee; padding: 20px; border-radius: 8px">
-    <h3>Ajouter un produit</h3>
-
-    <label>Code-barres (Recherche OpenFoodFacts) :</label><br />
-    <input
-      type="text"
-      id="prod-barcode"
-      placeholder="Scanner ou taper le code"
-    />
-    <button id="btn-search-off">Rechercher API</button>
-    <span
-      id="api-feedback"
-      style="font-size: 12px; display: block; margin-top: 5px"
-    ></span>
-
-    <br /><br />
-    <label>Nom du produit * :</label><br />
-    <input type="text" id="prod-name" required /><br /><br />
-
-    <label>Marque :</label><br />
-    <input type="text" id="prod-brand" /><br /><br />
-
-    <label>Prix de vente (€) * :</label><br />
-    <input type="number" id="prod-price" step="0.01" required /><br /><br />
-
-    <label>TVA (%) :</label><br />
-    <select id="prod-tva">
-      <option value="5.5">5.5% (Alimentation générale)</option>
-      <option value="20">20% (Standard)</option></select
-    ><br /><br />
-
-    <input type="hidden" id="prod-image" />
-
-    <button
-      id="btn-save-product"
-      style="background: green; color: white; padding: 10px"
+    <div
+      style="
+        background: #eef2f7;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        border: 2px solid #3498db;
+      "
     >
-      Enregistrer le produit
-    </button>
-  </div>
+      <h2>🛒 Encaisser un client</h2>
 
-  <div style="flex: 1">
-    <h3>Produits en Catalogue</h3>
-    <ul id="products-list"></ul>
-  </div>
-</div>
+      <div style="display: flex; gap: 20px; align-items: flex-end">
+        <div>
+          <label>Sélectionner un produit :</label><br />
+          <select
+            id="cart-product-select"
+            style="padding: 8px; min-width: 250px"
+          >
+            <option value="">-- Choisir un article --</option>
+          </select>
+        </div>
+        <div>
+          <label>Quantité :</label><br />
+          <input
+            type="number"
+            id="cart-item-qty"
+            value="1"
+            min="1"
+            style="padding: 8px; width: 60px"
+          />
+        </div>
+        <button
+          id="btn-add-to-cart"
+          style="
+            background: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+          "
+        >
+          Ajouter au ticket
+        </button>
+      </div>
 
-<script src="renderer.js"></script>
+      <table
+        style="
+          width: 100%;
+          margin-top: 20px;
+          border-collapse: collapse;
+          background: white;
+        "
+      >
+        <thead>
+          <tr style="background: #34495e; color: white; text-align: left">
+            <th style="padding: 10px">Produit</th>
+            <th style="padding: 10px">Prix Unitaire</th>
+            <th style="padding: 10px">Quantité</th>
+            <th style="padding: 10px">Total TTC</th>
+            <th style="padding: 10px">Action</th>
+          </tr>
+        </thead>
+        <tbody id="cart-table-body"></tbody>
+      </table>
+
+      <div style="text-align: right; margin-top: 20px">
+        <h2 style="margin: 0">
+          Total à Payer :
+          <span id="cart-total" style="color: #27ae60">0.00€</span>
+        </h2>
+        <br />
+        <button
+          id="btn-validate-sale"
+          style="
+            background: #27ae60;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+          "
+        >
+          Valider l'encaissement
+        </button>
+      </div>
+    </div>
+
+    <details>
+      <summary
+        style="
+          cursor: pointer;
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        "
+      >
+        📦 Gérer le Catalogue (Ajout / Visualisation)
+      </summary>
+      <div style="display: flex; gap: 40px; margin-top: 10px">
+        <div
+          style="flex: 1; background: #eee; padding: 20px; border-radius: 8px"
+        >
+          <h3>Ajouter un produit</h3>
+          <label>Code-barres (OpenFoodFacts) :</label><br />
+          <input type="text" id="prod-barcode" />
+          <button id="btn-search-off">Rechercher API</button>
+          <span
+            id="api-feedback"
+            style="font-size: 12px; display: block; margin-top: 5px"
+          ></span>
+          <br />
+          <label>Nom du produit * :</label><br />
+          <input type="text" id="prod-name" required /><br /><br />
+          <label>Marque :</label><br />
+          <input type="text" id="prod-brand" /><br /><br />
+          <label>Prix de vente (€) * :</label><br />
+          <input
+            type="number"
+            id="prod-price"
+            step="0.01"
+            required
+          /><br /><br />
+          <label>TVA (%) :</label><br />
+          <select id="prod-tva">
+            <option value="5.5">5.5% (Alimentation)</option>
+            <option value="20">20% (Standard)</option></select
+          ><br /><br />
+          <input type="hidden" id="prod-image" />
+          <button
+            id="btn-save-product"
+            style="background: green; color: white; padding: 10px"
+          >
+            Enregistrer
+          </button>
+        </div>
+        <div style="flex: 1">
+          <h3>Produits en Catalogue</h3>
+          <ul id="products-list"></ul>
+        </div>
+      </div>
+    </details>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
