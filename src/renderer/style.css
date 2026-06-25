@@ -1,12 +1,46 @@
+/* Thème Clair par défaut */
+:root {
+  --bg-color: #f9f9f9;
+  --text-color: #333333;
+  --panel-cart-bg: #eef2f7;
+  --panel-cart-border: #3498db;
+  --panel-catalog-bg: #eeeeee;
+  --panel-compta-bg: #fcf8e3;
+  --panel-compta-border: #fbeed5;
+  --table-bg: #ffffff;
+  --table-text: #333333;
+}
+
+/* Thème Sombre */
+.dark-theme {
+  --bg-color: #1e272e;
+  --text-color: #f5f6fa;
+  --panel-cart-bg: #2f3640;
+  --panel-cart-border: #00a8ff;
+  --panel-catalog-bg: #353b48;
+  --panel-compta-bg: #2c3e50;
+  --panel-compta-border: #718093;
+  --table-bg: #2f3640;
+  --table-text: #f5f6fa;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 20px;
-  background-color: #f9f9f9;
-  color: #333;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
-h1 {
-  color: #2c3e50;
+
+h1,
+h2,
+h3,
+h4 {
+  color: inherit; /* Utilise la couleur du thème actuel */
 }
+
 strong {
   font-weight: bold;
 }

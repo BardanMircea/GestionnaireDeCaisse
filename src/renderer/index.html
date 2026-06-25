@@ -7,33 +7,65 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Système de Caisse & Catalogue 🛒</h1>
-    <p>Statut BDD : <span id="db-status">...</span></p>
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #34495e;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      "
+    >
+      <h2 style="margin: 0" id="txt-app-title">Système de Caisse 🛒</h2>
+      <div>
+        <select id="setting-lang" style="padding: 5px; margin-right: 10px">
+          <option value="fr">Français 🇫🇷</option>
+          <option value="en">English 🇬🇧</option>
+        </select>
+        <button
+          id="btn-toggle-theme"
+          style="padding: 5px 10px; cursor: pointer"
+        >
+          🌓 Mode Sombre
+        </button>
+      </div>
+    </div>
+
+    <p>
+      <span id="txt-db-status-label">Statut BDD :</span>
+      <span id="db-status">...</span>
+    </p>
     <hr />
 
     <div
       style="
-        background: #eef2f7;
         padding: 20px;
         border-radius: 8px;
         margin-bottom: 30px;
-        border: 2px solid #3498db;
+        background-color: var(--panel-cart-bg);
+        border: 2px solid var(--panel-cart-border);
       "
     >
-      <h2>🛒 Encaisser un client</h2>
+      <h2 id="txt-cart-title">🛒 Encaisser un client</h2>
 
       <div style="display: flex; gap: 20px; align-items: flex-end">
         <div>
-          <label>Sélectionner un produit :</label><br />
+          <label id="txt-select-prod-label">Sélectionner un produit :</label
+          ><br />
           <select
             id="cart-product-select"
             style="padding: 8px; min-width: 250px"
           >
-            <option value="">-- Choisir un article --</option>
+            <option value="" id="txt-select-prod-placeholder">
+              -- Choisir un article --
+            </option>
           </select>
         </div>
         <div>
-          <label>Quantité :</label><br />
+          <label id="txt-qty-label">Quantité :</label><br />
           <input
             type="number"
             id="cart-item-qty"
@@ -62,14 +94,15 @@
           width: 100%;
           margin-top: 20px;
           border-collapse: collapse;
-          background: white;
+          background-color: var(--table-bg);
+          color: var(--table-text);
         "
       >
         <thead>
           <tr style="background: #34495e; color: white; text-align: left">
-            <th style="padding: 10px">Produit</th>
-            <th style="padding: 10px">Prix Unitaire</th>
-            <th style="padding: 10px">Quantité</th>
+            <th style="padding: 10px" id="th-product">Produit</th>
+            <th style="padding: 10px" id="th-price">Prix Unitaire</th>
+            <th style="padding: 10px" id="th-qty">Quantité</th>
             <th style="padding: 10px">Total TTC</th>
             <th style="padding: 10px">Action</th>
           </tr>
@@ -79,7 +112,7 @@
 
       <div style="text-align: right; margin-top: 20px">
         <h2 style="margin: 0">
-          Total à Payer :
+          <span id="txt-total-label">Total à Payer :</span>
           <span id="cart-total" style="color: #27ae60">0.00€</span>
         </h2>
         <br />
@@ -109,15 +142,22 @@
           font-weight: bold;
           margin-bottom: 10px;
         "
+        id="txt-catalog-summary"
       >
         📦 Gérer le Catalogue (Ajout / Visualisation)
       </summary>
       <div style="display: flex; gap: 40px; margin-top: 10px">
         <div
-          style="flex: 1; background: #eee; padding: 20px; border-radius: 8px"
+          style="
+            flex: 1;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: var(--panel-catalog-bg);
+          "
         >
-          <h3>Ajouter un produit</h3>
-          <label>Code-barres (OpenFoodFacts) :</label><br />
+          <h3 id="txt-add-prod-title">Ajouter un produit</h3>
+          <label id="txt-barcode-label">Code-barres (OpenFoodFacts) :</label
+          ><br />
           <input type="text" id="prod-barcode" />
           <button id="btn-search-off">Rechercher API</button>
           <span
@@ -125,18 +165,18 @@
             style="font-size: 12px; display: block; margin-top: 5px"
           ></span>
           <br />
-          <label>Nom du produit * :</label><br />
+          <label id="txt-prod-name-label">Nom du produit * :</label><br />
           <input type="text" id="prod-name" required /><br /><br />
-          <label>Marque :</label><br />
+          <label id="txt-prod-brand-label">Marque :</label><br />
           <input type="text" id="prod-brand" /><br /><br />
-          <label>Prix de vente (€) * :</label><br />
+          <label id="txt-prod-price-label">Prix de vente (€) * :</label><br />
           <input
             type="number"
             id="prod-price"
             step="0.01"
             required
           /><br /><br />
-          <label>TVA (%) :</label><br />
+          <label id="txt-prod-tva-label">TVA (%) :</label><br />
           <select id="prod-tva">
             <option value="5.5">5.5% (Alimentation)</option>
             <option value="20">20% (Standard)</option></select
@@ -150,11 +190,51 @@
           </button>
         </div>
         <div style="flex: 1">
-          <h3>Produits en Catalogue</h3>
+          <h3 id="txt-catalog-list-title">Produits en Catalogue</h3>
           <ul id="products-list"></ul>
         </div>
       </div>
     </details>
+    <hr />
+
+    <div
+      style="
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 30px;
+        background-color: var(--panel-compta-bg);
+        border: 1px solid var(--panel-compta-border);
+      "
+    >
+      <h2 id="txt-compta-title">📊 Historique & Chiffres Comptables</h2>
+      <button
+        id="btn-export-csv"
+        style="
+          background: #d9534f;
+          color: white;
+          padding: 10px 15px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-weight: bold;
+        "
+      >
+        📥 Exporter les données (CSV)
+      </button>
+
+      <h4 id="txt-latest-sales">Dernières ventes enregistrées :</h4>
+      <ul
+        id="sales-history-list"
+        style="
+          max-height: 150px;
+          overflow-y: auto;
+          background: white;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+        "
+      ></ul>
+    </div>
 
     <script src="renderer.js"></script>
   </body>
