@@ -4,9 +4,11 @@
   "description": "Logiciel de caisse sécurisé pour épicerie de quartier",
   "main": "src/main/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "test": "jest"
   },
   "devDependencies": {
-    "electron": "^30.0.0"
+    "electron": "^30.0.0",
+    "jest": "^30.4.2"
   }
 }
