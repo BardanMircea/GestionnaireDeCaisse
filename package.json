@@ -5,10 +5,35 @@
   "main": "src/main/main.js",
   "scripts": {
     "start": "electron .",
-    "test": "jest"
+    "test": "jest",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "devDependencies": {
     "electron": "^30.0.0",
+    "electron-builder": "^26.15.3",
     "jest": "^30.4.2"
+  },
+  "build": {
+    "appId": "com.epicerie.pos",
+    "productName": "CaisseEpicerie",
+    "files": [
+      "src/**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": "dmg"
+    }
   }
 }
