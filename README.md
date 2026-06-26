@@ -45,7 +45,7 @@ L'installeur (ex: .exe pour Windows ou .dmg pour macOS) sera généré dans le d
 
 ## 📸 Aperçus du processus d'installation (Windows) et du fonctionnement de l'Application
 
-### 1. Après avoir éxécuté `npm run dist`, un dossier "dist" apparaîtraà la racine du projet; Clique sur le fihier .exe pour démmarrer l'installation
+### 1. Après avoir éxécuté `npm run dist`, un dossier "dist" apparaîtra à la racine du projet; Clique sur le fichier .exe pour démmarrer l'installation
 
 ![.exe](./screenshots/install-1.png)
 
@@ -65,7 +65,7 @@ L'installeur (ex: .exe pour Windows ou .dmg pour macOS) sera généré dans le d
 
 ![path](./screenshots/installed_folder.png)
 
-### 6. Une icône apparaîtra sur to Desktop; Double clique sur cette icône pour ouvrir l'application
+### 6. Une icône apparaîtra sur ton Desktop; Double clique sur cette icône pour ouvrir l'application
 
 ![run](./screenshots/run.png)
 
