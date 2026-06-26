@@ -36,7 +36,7 @@ Pour vérifier l'exactitude des calculs comptables du panier :
 
 ## 📦 Production : Générer l'Installeur Client
 
-Pour livrer l'application sous forme de fichier exécutable autonome (Installeur graphique) pour la gérante :
+Pour livrer l'application sous forme de fichier exécutable autonome (Installeur graphique) :
 `npm run dist`
 
 L'installeur (ex: .exe pour Windows ou .dmg pour macOS) sera généré dans le dossier /dist. Le client n'aura qu'à double-cliquer dessus pour installer l'application sur sa machine.
