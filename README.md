@@ -7,7 +7,7 @@ Application de caisse enregistreuse Desktop moderne, robuste et sécurisée con�
 - **Encaissement Rapide** : Gestion d'un panier virtuel, modification des quantités, calcul du total TTC en temps réel et validation de la vente.
 - **Gestion du Catalogue** : Double logique d'ajout. Scan de code-barres avec auto-complétion via l'API OpenFoodFacts ou saisie manuelle (idéal en cas de coupure Internet).
 - **Historique & Comptabilité** : Visualisation des dernières transactions et export instantané des données au format CSV structuré pour le comptable.
-- **Expérience Utilisateur (UX)** : Entièrement bilingue (Français/Anglais) avec mémorisation des préférences et support du Mode Sombre pour le confort visuel de la gérante.
+- **Expérience Utilisateur (UX)** : Entièrement bilingue (Français/Anglais) avec mémorisation des préférences et support du Mode Sombre pour le confort visuel de l'utilisateur.
 - **Sécurité Maximale** : Sandbox activée, isolation des contextes respectée, aucune fuite de privilèges Node.js dans l'interface utilisateur.
 
 ---
